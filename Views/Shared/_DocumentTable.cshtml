@@ -1,0 +1,63 @@
+@model IReadOnlyList<Document>
+@{
+    var showClientActions = ViewData["ShowClientDocumentActions"] is true;
+    var showAccountantActions = ViewData["ShowAccountantDocumentActions"] is true;
+}
+
+@if (!Model.Any())
+{
+    <p>No documents yet.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>File</th>
+                <th>Client</th>
+                <th>Status</th>
+                <th>Uploaded</th>
+                <th>Reports</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var document in Model)
+        {
+            <tr>
+                <td>@document.OriginalFileName</td>
+                <td>@document.Client?.DisplayName</td>
+                <td><span class="badge @document.Status.ToString().ToLowerInvariant()">@document.Status</span></td>
+                <td>@document.UploadedAtUtc.ToLocalTime().ToString("g")</td>
+                <td>@document.Reports.Count</td>
+                <td class="actions">
+                    <a asp-controller="Documents" asp-action="Open" asp-route-id="@document.Id">Open</a>
+                    @if (showClientActions)
+                    {
+                        <form asp-controller="Documents" asp-action="MarkPaid" asp-route-id="@document.Id" method="post">
+                            <button type="submit">Mark paid</button>
+                        </form>
+                        <form asp-controller="Documents" asp-action="Delete" asp-route-id="@document.Id" method="post">
+                            <button class="danger" type="submit">Delete</button>
+                        </form>
+                    }
+                    @if (showAccountantActions)
+                    {
+                        <form asp-controller="Documents" asp-action="GenerateReport" method="post" class="inline-report">
+                            <input type="hidden" name="DocumentId" value="@document.Id" />
+                            <input type="text" name="AccountantComments" placeholder="Accountant comments" />
+                            <button type="submit">Generate report</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+            @if (document.Reports.Any())
+            {
+                <tr>
+                    <td colspan="6"><partial name="_ReportTable" model="document.Reports.OrderByDescending(report => report.CreatedAtUtc).ToList()" /></td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+}

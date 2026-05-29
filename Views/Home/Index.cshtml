@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Home";
+}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">Secure accounting workspace</p>
+        <h1>Manage clients, documents, tax reports, and payment status in one ASP.NET MVC portal.</h1>
+        <p>Clients upload accounting files, accountants review them, generate tax estimates, and both sides track payment status without exposing sensitive profile data.</p>
+    </div>
+    <div class="hero-actions">
+        <a class="button" asp-controller="ClientDashboard" asp-action="Index">Enter Client Dashboard</a>
+        <a class="button secondary" asp-controller="AccountantDashboard" asp-action="Index">Enter Accountant Dashboard</a>
+    </div>
+</section>

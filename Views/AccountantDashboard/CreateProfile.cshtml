@@ -1,0 +1,24 @@
+@model Accountant
+@{
+    ViewData["Title"] = "Create Accountant Profile";
+}
+
+<section class="card narrow">
+    <h1>Create accountant profile</h1>
+    <form asp-action="CreateProfile" method="post" class="form-stack">
+        <label asp-for="DisplayName"></label>
+        <input asp-for="DisplayName" />
+        <span asp-validation-for="DisplayName"></span>
+
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" />
+
+        <label asp-for="OfficeAddress"></label>
+        <input asp-for="OfficeAddress" />
+
+        <label asp-for="LicenseNumber"></label>
+        <input asp-for="LicenseNumber" />
+
+        <button class="button" type="submit">Save Profile</button>
+    </form>
+</section>

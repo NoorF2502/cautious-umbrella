@@ -1,0 +1,40 @@
+@model AccountantDashboardViewModel
+@{
+    ViewData["Title"] = "Accountant Dashboard";
+    ViewData["ShowAccountantDocumentActions"] = true;
+}
+<div class="dashboard-header">
+    <div>
+        <p class="eyebrow">Accountant control panel</p>
+        <h1>Welcome, @Model.Accountant.DisplayName</h1>
+    </div>
+    <a class="button" asp-action="MyClients">Open My Clients</a>
+</div>
+
+<div class="grid three">
+    <section class="stat card"><span>@Model.Clients.Count</span><p>Assigned clients</p></section>
+    <section class="stat card"><span>@Model.PendingDocuments.Count</span><p>Pending or unpaid documents</p></section>
+    <section class="stat card"><span>@Model.PaidDocuments.Count</span><p>Paid documents</p></section>
+</div>
+
+<section class="card">
+    <h2>Notifications</h2>
+    @if (!Model.Notifications.Any())
+    {
+        <p>No unread messages.</p>
+    }
+    else
+    {
+        <ul class="list">
+            @foreach (var item in Model.Notifications)
+            {
+                <li><strong>@item.Title</strong><span>@item.Body</span></li>
+            }
+        </ul>
+    }
+</section>
+
+<section class="card">
+    <h2>Pending Work</h2>
+    <partial name="_DocumentTable" model="Model.PendingDocuments" />
+</section>

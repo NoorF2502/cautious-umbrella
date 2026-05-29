@@ -1,0 +1,22 @@
+@model IReadOnlyList<Document>
+@{
+    ViewData["Title"] = "My Documents";
+    ViewData["ShowClientDocumentActions"] = true;
+}
+<section class="card">
+    <div class="dashboard-header">
+        <div>
+            <p class="eyebrow">Client documents</p>
+            <h1>My Documents</h1>
+        </div>
+    </div>
+    <form asp-action="Upload" method="post" enctype="multipart/form-data" class="upload-box">
+        <input type="file" name="File" accept=".csv,.txt,.pdf,.png,.jpg,.jpeg" />
+        <button class="button" type="submit">Upload document</button>
+    </form>
+</section>
+
+<section class="card">
+    <h2>Uploaded Documents & Reports</h2>
+    <partial name="_DocumentTable" model="Model" />
+</section>

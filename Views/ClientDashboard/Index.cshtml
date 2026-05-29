@@ -1,0 +1,57 @@
+@model ClientDashboardViewModel
+@{
+    ViewData["Title"] = "Client Dashboard";
+    ViewData["ShowClientDocumentActions"] = true;
+}
+<div class="dashboard-header">
+    <div>
+        <p class="eyebrow">Client control panel</p>
+        <h1>Welcome, @Model.Client.DisplayName</h1>
+    </div>
+    <a class="button" asp-controller="Documents" asp-action="Index">Open My Documents</a>
+</div>
+
+<div class="grid two">
+    <section class="card">
+        <h2>My Accountant</h2>
+        @if (Model.Accountant is null)
+        {
+            <p>No accountant is assigned yet.</p>
+        }
+        else
+        {
+            <dl class="details">
+                <dt>Name</dt><dd>@Model.Accountant.DisplayName</dd>
+                <dt>Phone</dt><dd>@Model.Accountant.Phone</dd>
+                <dt>Office</dt><dd>@Model.Accountant.OfficeAddress</dd>
+            </dl>
+        }
+    </section>
+
+    <section class="card">
+        <h2>Notifications</h2>
+        @if (!Model.Notifications.Any())
+        {
+            <p>No unread messages.</p>
+        }
+        else
+        {
+            <ul class="list">
+                @foreach (var item in Model.Notifications)
+                {
+                    <li><strong>@item.Title</strong><span>@item.Body</span></li>
+                }
+            </ul>
+        }
+    </section>
+</div>
+
+<section class="card">
+    <h2>Recent Documents</h2>
+    <partial name="_DocumentTable" model="Model.RecentDocuments" />
+</section>
+
+<section class="card">
+    <h2>Reports From Accountant</h2>
+    <partial name="_ReportTable" model="Model.Reports" />
+</section>

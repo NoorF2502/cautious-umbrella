@@ -1,0 +1,39 @@
+@model IReadOnlyList<Client>
+@{
+    ViewData["Title"] = "My Clients";
+    ViewData["ShowAccountantDocumentActions"] = true;
+}
+<section class="card">
+    <h1>My Clients</h1>
+    <p class="muted">Only non-sensitive client profile details are shown.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Business</th>
+                <th>Phone</th>
+                <th>Documents</th>
+                <th>Pending</th>
+                <th>Paid</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.DisplayName</td>
+                <td>@client.BusinessName</td>
+                <td>@client.Phone</td>
+                <td>@client.Documents.Count</td>
+                <td>@client.Documents.Count(document => document.Status != DocumentStatus.Paid)</td>
+                <td>@client.Documents.Count(document => document.Status == DocumentStatus.Paid)</td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <partial name="_DocumentTable" model="client.Documents.OrderByDescending(document => document.UploadedAtUtc).ToList()" />
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>

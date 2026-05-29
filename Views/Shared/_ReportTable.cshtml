@@ -1,0 +1,34 @@
+@model IReadOnlyList<Report>
+
+@if (!Model.Any())
+{
+    <p>No reports yet.</p>
+}
+else
+{
+    <table class="nested">
+        <thead>
+            <tr>
+                <th>Created</th>
+                <th>Taxable Amount</th>
+                <th>Tax Rate</th>
+                <th>Tax Amount</th>
+                <th>Payment Status</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>@report.CreatedAtUtc.ToLocalTime().ToString("g")</td>
+                <td>@report.TaxableAmount.ToString("C")</td>
+                <td>@report.TaxRate.ToString("P0")</td>
+                <td>@report.TaxAmount.ToString("C")</td>
+                <td>@report.PaymentStatus</td>
+                <td>@report.AccountantComments</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
