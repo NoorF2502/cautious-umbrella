@@ -1,0 +1,25 @@
+@model Client
+@{
+    ViewData["Title"] = "Create Client Profile";
+}
+
+<section class="card narrow">
+    <h1>Create client profile</h1>
+    <form asp-action="CreateProfile" method="post" class="form-stack">
+        <label asp-for="DisplayName"></label>
+        <input asp-for="DisplayName" />
+        <span asp-validation-for="DisplayName"></span>
+
+        <label asp-for="Phone"></label>
+        <input asp-for="Phone" />
+
+        <label asp-for="BusinessName"></label>
+        <input asp-for="BusinessName" />
+
+        <label asp-for="AccountantId">Assigned accountant ID</label>
+        <input asp-for="AccountantId" />
+        <small>In production this should be a searchable invitation or assignment workflow.</small>
+
+        <button class="button" type="submit">Save Profile</button>
+    </form>
+</section>
