@@ -1,0 +1,26 @@
+@model IEnumerable<Report>
+<table>
+    <thead><tr><th>Title</th><th>Document</th><th>Income</th><th>Expenses</th><th>Tax due</th><th>Payment</th><th>Notes</th><th>Actions</th></tr></thead>
+    <tbody>
+    @foreach (var report in Model)
+    {
+        <tr>
+            <td>@report.Title</td>
+            <td>@report.Document?.OriginalFileName</td>
+            <td>@report.Income.ToString("C")</td>
+            <td>@report.Expenses.ToString("C")</td>
+            <td>@report.TaxDue.ToString("C")</td>
+            <td><span class="badge">@report.PaymentStatus</span> @report.PaymentAmount.ToString("C")</td>
+            <td><strong>Notes:</strong> @report.Notes<br /><strong>Accountant:</strong> @report.AccountantComments</td>
+            <td>
+                @if (report.PaymentStatus == PaymentStatus.Unpaid)
+                {
+                    <form asp-action="MarkPaymentCompleted" method="post" asp-route-reportId="@report.Id">
+                        <button type="submit">Mark paid</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

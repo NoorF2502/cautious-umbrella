@@ -1,0 +1,22 @@
+@model CreateReportViewModel
+@{
+    ViewData["Title"] = "Create report";
+}
+<h1>Create report</h1>
+<section class="card">
+    <p><strong>Client:</strong> @Model.Client?.FullName</p>
+    <p><strong>Document:</strong> @Model.Document?.OriginalFileName</p>
+</section>
+<form asp-action="CreateReport" method="post" class="card">
+    <input type="hidden" asp-for="ClientId" />
+    <input type="hidden" asp-for="DocumentId" />
+    <div asp-validation-summary="ModelOnly"></div>
+    <label asp-for="Title"></label><input asp-for="Title" /> <span asp-validation-for="Title"></span>
+    <label asp-for="Income"></label><input asp-for="Income" /> <span asp-validation-for="Income"></span>
+    <label asp-for="Expenses"></label><input asp-for="Expenses" /> <span asp-validation-for="Expenses"></span>
+    <label asp-for="TaxRatePercent"></label><input asp-for="TaxRatePercent" /> <span asp-validation-for="TaxRatePercent"></span>
+    <label asp-for="PaymentAmount"></label><input asp-for="PaymentAmount" /> <span asp-validation-for="PaymentAmount"></span>
+    <label asp-for="Notes"></label><textarea asp-for="Notes" rows="4"></textarea>
+    <label asp-for="AccountantComments"></label><textarea asp-for="AccountantComments" rows="4"></textarea>
+    <div class="actions"><button type="submit">Send report</button><a asp-action="Documents">Cancel</a></div>
+</form>

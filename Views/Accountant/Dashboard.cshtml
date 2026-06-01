@@ -1,0 +1,37 @@
+@model AccountantDashboardViewModel
+@{
+    ViewData["Title"] = "Accountant dashboard";
+}
+<h1>Welcome, @Model.Accountant.FullName</h1>
+<div class="actions">
+    <a class="button" asp-action="Clients">Assigned clients</a>
+    <a class="button secondary" asp-action="Documents">Client documents</a>
+    <form asp-action="Logout" method="post"><button type="submit">Log out</button></form>
+</div>
+<div class="grid">
+    <section class="card"><h2>Clients</h2><p>@Model.Clients.Count assigned</p></section>
+    <section class="card"><h2>Pending documents</h2><p>@Model.RecentDocuments.Count(d => d.Status == DocumentStatus.Pending)</p></section>
+    <section class="card"><h2>Recent activity</h2><p>@Model.Clients.Count(c => c.LastActivityAtUtc != null) active clients</p></section>
+</div>
+<section class="card">
+    <h2>Recent client activity</h2>
+    <table>
+        <thead><tr><th>Client</th><th>Last activity</th><th>Documents</th><th>Reports</th><th>Action</th></tr></thead>
+        <tbody>
+        @foreach (var client in Model.Clients.OrderByDescending(c => c.LastActivityAtUtc))
+        {
+            <tr>
+                <td>@client.FullName</td>
+                <td>@(client.LastActivityAtUtc?.ToLocalTime().ToString("g") ?? "No activity yet")</td>
+                <td>@client.Documents.Count</td>
+                <td>@client.Reports.Count</td>
+                <td><a asp-action="ClientDetails" asp-route-id="@client.Id">View</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</section>
+<section class="card">
+    <h2>Latest documents</h2>
+    <partial name="_DocumentReviewTable" model="Model.RecentDocuments" />
+</section>

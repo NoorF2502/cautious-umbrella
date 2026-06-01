@@ -1,0 +1,11 @@
+@model DocumentUploadViewModel
+@{
+    ViewData["Title"] = "Upload document";
+}
+<h1>Upload document</h1>
+<form asp-action="UploadDocument" method="post" enctype="multipart/form-data" class="card">
+    <div asp-validation-summary="ModelOnly"></div>
+    <label asp-for="File"></label><input asp-for="File" type="file" /> <span asp-validation-for="File"></span>
+    <label asp-for="Description"></label><textarea asp-for="Description" rows="4"></textarea>
+    <div class="actions"><button type="submit">Upload</button><a asp-action="Documents">Cancel</a></div>
+</form>

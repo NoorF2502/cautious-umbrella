@@ -1,0 +1,20 @@
+@model ClientDetailsViewModel
+@{
+    ViewData["Title"] = "Client details";
+}
+<h1>@Model.Client.FullName</h1>
+<section class="card">
+    <h2>Client information</h2>
+    <p><strong>Email:</strong> @Model.Client.Email</p>
+    <p><strong>Phone:</strong> @Model.Client.PhoneNumber</p>
+    <p><strong>Address:</strong> @Model.Client.Address</p>
+    <p><strong>Last activity:</strong> @(Model.Client.LastActivityAtUtc?.ToLocalTime().ToString("g") ?? "None")</p>
+</section>
+<section class="card">
+    <h2>Documents</h2>
+    <partial name="_DocumentReviewTable" model="Model.Documents" />
+</section>
+<section class="card">
+    <h2>Reports sent</h2>
+    <partial name="_ReportTable" model="Model.Reports" />
+</section>
