@@ -1,0 +1,7 @@
+@model IEnumerable<Report>
+@{
+    ViewData["Title"] = "My reports";
+}
+<h1>My reports</h1>
+<div class="actions"><a asp-action="Dashboard">Back to dashboard</a></div>
+<partial name="_ReportTable" model="Model" />

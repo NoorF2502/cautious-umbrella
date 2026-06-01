@@ -1,0 +1,24 @@
+@model IEnumerable<Client>
+@{
+    ViewData["Title"] = "Assigned clients";
+}
+<h1>Assigned clients</h1>
+<div class="actions"><a asp-action="Dashboard">Back to dashboard</a></div>
+<table>
+    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Address</th><th>Documents</th><th>Reports</th><th>Recent activity</th><th></th></tr></thead>
+    <tbody>
+    @foreach (var client in Model)
+    {
+        <tr>
+            <td>@client.FullName</td>
+            <td>@client.Email</td>
+            <td>@client.PhoneNumber</td>
+            <td>@client.Address</td>
+            <td>@client.Documents.Count</td>
+            <td>@client.Reports.Count</td>
+            <td>@(client.LastActivityAtUtc?.ToLocalTime().ToString("g") ?? "None")</td>
+            <td><a asp-action="ClientDetails" asp-route-id="@client.Id">Details</a></td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,28 @@
+@model IEnumerable<Document>
+<table>
+    <thead><tr><th>File</th><th>Description</th><th>Status</th><th>Payment</th><th>Uploaded</th><th>Actions</th></tr></thead>
+    <tbody>
+    @foreach (var document in Model)
+    {
+        <tr>
+            <td><a href="~/uploads/@document.StoredFileName" target="_blank">@document.OriginalFileName</a></td>
+            <td>@document.Description</td>
+            <td><span class="badge">@document.Status</span></td>
+            <td><span class="badge">@document.PaymentStatus</span></td>
+            <td>@document.UploadedAtUtc.ToLocalTime().ToString("g")</td>
+            <td>
+                @if (document.Status == DocumentStatus.Pending)
+                {
+                    <form asp-action="DeleteDocument" method="post" asp-route-id="@document.Id">
+                        <button type="submit" class="danger">Delete</button>
+                    </form>
+                }
+                else
+                {
+                    <span class="muted">Processed</span>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

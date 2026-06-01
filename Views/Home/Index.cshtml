@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Welcome";
+}
+
+<section class="hero">
+    <h1>Accounting client portal</h1>
+    <p>Clients can upload documents and track payments while accountants review files and send reports.</p>
+    <div class="actions">
+        <a class="button" asp-controller="Client" asp-action="Register">Client register</a>
+        <a class="button secondary" asp-controller="Client" asp-action="Login">Client login</a>
+        <a class="button" asp-controller="Accountant" asp-action="Register">Accountant register</a>
+        <a class="button secondary" asp-controller="Accountant" asp-action="Login">Accountant login</a>
+    </div>
+</section>

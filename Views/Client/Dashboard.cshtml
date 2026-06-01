@@ -1,0 +1,41 @@
+@model ClientDashboardViewModel
+@{
+    ViewData["Title"] = "Client dashboard";
+}
+<h1>Welcome, @Model.Client.FullName</h1>
+<div class="actions">
+    <a class="button" asp-action="UploadDocument">Upload document</a>
+    <a class="button secondary" asp-action="Documents">View documents</a>
+    <a class="button secondary" asp-action="Reports">View reports</a>
+    <form asp-action="Logout" method="post"><button type="submit" class="secondary">Log out</button></form>
+</div>
+<div class="grid">
+    <section class="card">
+        <h2>Assigned accountant</h2>
+        @if (Model.Accountant == null)
+        {
+            <p class="muted">No accountant has been assigned yet.</p>
+        }
+        else
+        {
+            <p><strong>@Model.Accountant.FullName</strong></p>
+            <p>@Model.Accountant.Email</p>
+            <p>@Model.Accountant.PhoneNumber</p>
+            <p>@Model.Accountant.OfficeAddress</p>
+        }
+    </section>
+    <section class="card">
+        <h2>Status summary</h2>
+        <p>Documents: @Model.Documents.Count</p>
+        <p>Reports: @Model.Reports.Count</p>
+        <p>Unpaid reports: @Model.Reports.Count(r => r.PaymentStatus == PaymentStatus.Unpaid)</p>
+    </section>
+</div>
+<section class="card">
+    <h2>Recent documents</h2>
+    <partial name="_DocumentTable" model="Model.Documents" />
+</section>
+<section class="card">
+    <h2>Recent reports</h2>
+    <partial name="_ReportTable" model="Model.Reports" />
+</section>
